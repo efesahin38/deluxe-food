@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deluxe Food Potsdam – Pizza · Pasta · Burger · Döner</title>
+  <meta name="description" content="Deluxe Food Potsdam – Ihr Restaurant für Pizza, Pasta, Burger und Döner in der Potsdamer Straße 18. Jetzt online bestellen über Wolt oder Lieferando!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-brand">
+        <img src="logo.png" alt="Deluxe Food" class="nav-logo-img" />
+        <span>Deluxe Food</span>
+      </a>
+      <div class="nav-right">
+        <a href="tel:033190067332" class="nav-phone">📞 0331 90067332</a>
+        <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ SIDE DRAWER ═══ -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="drawer" id="drawer">
+    <button class="drawer-close" id="drawerClose" aria-label="Schließen">✕</button>
+    <div class="drawer-logo">
+      <img src="logo.png" alt="Deluxe Food" />
+      <span>Deluxe Food</span>
+    </div>
+    <nav class="drawer-nav">
+      <a href="#bestellung" class="drawer-link" data-close>🛵 Online Bestellen</a>
+      <a href="#menu"       class="drawer-link" data-close>🍽️ Speisekarte</a>
+      <a href="#reviews"    class="drawer-link" data-close>⭐ Bewertungen</a>
+      <a href="#contact"    class="drawer-link" data-close>📍 Kontakt</a>
+      <a href="tel:033190067332" class="drawer-link">📞 0331 90067332</a>
+    </nav>
+    <div class="drawer-order">
+      <p>Jetzt bestellen:</p>
+      <a href="https://wolt.com/de/deu/potsdam/restaurant/deluxe-food-potsdam?pid=google&c=DEU_Web_FTU_Search_DSA_DE" target="_blank" class="drawer-order-btn wolt-btn">
+        <svg viewBox="0 0 60 20" class="wolt-icon"><text y="16" font-family="Arial,sans-serif" font-weight="900" font-size="18" fill="white">wolt</text></svg>
+        Wolt
+      </a>
+      <a href="https://www.lieferando.de/speisekarte/deluxe-food-potsdamer-strasse" target="_blank" class="drawer-order-btn liefer-btn">
+        Lieferando
+      </a>
+    </div>
+  </aside>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+    <div class="hero-container">
+
+      <!-- LEFT COPY -->
+      <div class="hero-copy">
+        <span class="hero-tag">🍽️ Restaurant in Potsdam</span>
+        <h1 class="hero-heading">
+          Das beste<br/>
+          <em class="hero-accent">Deluxe Food</em><br/>
+          Erlebnis
+        </h1>
+        <p class="hero-desc">
+          Pizza · Pasta · Burger · Döner – frisch zubereitet in der
+          Potsdamer Straße 18. Genießen Sie bei uns oder bestellen Sie
+          bequem nach Hause.
+        </p>
+        <div class="hero-actions">
+          <a href="#bestellung" class="btn btn-red">Jetzt bestellen →</a>
+          <a href="#menu" class="btn btn-ghost">Speisekarte</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <strong>4.8 ★</strong>
+            <span>Google Bewertung</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <strong>Wolt &amp; Lieferando</strong>
+            <span>Online Bestellung</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <strong>14469</strong>
+            <span>Potsdam</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="hero-visual">
+        <div class="hero-img-wrap">
+          <img src="deluxeback.jpg" alt="Deluxe Food Restaurant Potsdam" class="hero-img" />
+          <div class="float-card float-card--top">
+            <div class="float-dot float-dot--green"></div>
+            <div>
+              <strong>Jetzt geöffnet</strong>
+              <span>Bestellungen laufen</span>
+            </div>
+          </div>
+          <div class="float-card float-card--bottom">
+            <div class="float-emoji">🛵</div>
+            <div>
+              <strong>Schnelle Lieferung</strong>
+              <span>Wolt &amp; Lieferando</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="hero-wave">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#fff"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ═══ ORDER SECTION ═══ -->
+  <section class="order-section" id="bestellung">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Online Bestellen</span>
+        <h2 class="section-title">Jetzt bequem nach Hause bestellen</h2>
+        <p class="section-sub">Wählen Sie Ihre bevorzugte Lieferplattform – schnell, einfach und lecker.</p>
+      </div>
+      <div class="order-grid">
+        <a href="https://wolt.com/de/deu/potsdam/restaurant/deluxe-food-potsdam?pid=google&c=DEU_Web_FTU_Search_DSA_DE&af_adset=DSA_-_All&af_keywords=&keyword_match_type=&matchtype=&device=c&utm_source=google&utm_medium=cpc&utm_campaign=DEU_Web_FTU_Search_DSA_DE&utm_adgroup=DSA_-_All&utm_keyword=&utm_term=&utm_id=19832555909&adgroup_id=160776387309&keyword_id=dsa-2294974733227&ad_id=735101061568&gad_source=1&gad_campaignid=19832555909&gbraid=0AAAAADDYnyqr3CzQbN4L-j_5JaB8Z1y_n&gclid=Cj0KCQjw79nUBhCgARIsADSHka0ml7wj6IQcCdwaz7AXybJeTzoohqTETl-OqpXwO7rVdfgyc0Pt1dsaAmu4EALw_wcB"
+           target="_blank" class="order-card" id="wolt-link">
+          <div class="order-platform wolt-bg">
+            <span class="platform-wordmark">wolt</span>
+          </div>
+          <div class="order-card-body">
+            <h3>Über Wolt bestellen</h3>
+            <p>Schnelle Lieferung direkt an Ihre Tür – einfach auf Wolt bestellen und genießen!</p>
+            <span class="order-cta">Jetzt bestellen <span>→</span></span>
+          </div>
+        </a>
+        <a href="https://www.lieferando.de/speisekarte/deluxe-food-potsdamer-strasse"
+           target="_blank" class="order-card" id="lieferando-link">
+          <div class="order-platform liefer-bg">
+            <span class="platform-wordmark liefer-text">lieferando</span>
+          </div>
+          <div class="order-card-body">
+            <h3>Über Lieferando bestellen</h3>
+            <p>Auch auf Lieferando verfügbar – bestellen Sie schnell und bequem online!</p>
+            <span class="order-cta">Jetzt bestellen <span>→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MENU ═══ -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Unsere Küche</span>
+        <h2 class="section-title">Speisekarte</h2>
+        <p class="section-sub">Frisch zubereitet – jeden Tag für Sie.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs-wrap">
+        <div class="tabs" id="menuTabs">
+          <button class="tab active" data-cat="burger">🍔 Burger &amp; Co</button>
+          <button class="tab" data-cat="vegi">🥗 Vegi</button>
+          <button class="tab" data-cat="doener">🌯 Döner</button>
+          <button class="tab" data-cat="salate">🥙 Salate</button>
+          <button class="tab" data-cat="pizza">🍕 Pizza</button>
+          <button class="tab" data-cat="pasta">🍝 Pasta</button>
+        </div>
+      </div>
+
+      <!-- BURGER -->
+      <div class="menu-panel active" id="cat-burger">
+        <h3 class="cat-title">Burger &amp; Co</h3>
+        <div class="menu-grid">
+            <div class="mc"><div class="mc-left"><p class="mc-name">Hamburger</p><p class="mc-desc">125g Fleisch mit Salat, Tomate, Sauergurke, Zwiebel und Spezialsoße</p></div><span class="mc-price">€ 6,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Cheeseburger</p><p class="mc-desc">Hamburger mit Käse</p></div><span class="mc-price">€ 7,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Deluxe Burger</p><p class="mc-desc">2× 125g Fleisch mit Salat, Tomate, Sauergurke, Zwiebel und Spezialsoße</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Crispy Chicken Burger</p><p class="mc-desc">Hähnchenfleisch mit Salat, Tomate, Sauergurke, Zwiebel und Spezialsoße</p></div><span class="mc-price">€ 6,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Halloumi Burger</p><p class="mc-desc">Halloumikäse mit Salat, Tomate, Sauergurke, Zwiebel und Spezialsoße</p></div><span class="mc-price">€ 6,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">BBQ Smoky Burger</p><p class="mc-desc">125g Fleisch mit BBQ-Soße, Salat, Tomate, Sauergurke, Zwiebel und Spezialsoße</p></div><span class="mc-price">€ 7,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Chickennuggets 6 Stück</p><p class="mc-desc">Knusprige Hähnchen-Nuggets</p></div><span class="mc-price">€ 4,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Chickennuggets 9 Stück</p><p class="mc-desc">Knusprige Hähnchen-Nuggets</p></div><span class="mc-price">€ 6,00</span></div>
+          </div>
+      </div>
+
+      <!-- VEGI -->
+      <div class="menu-panel" id="cat-vegi">
+        <h3 class="cat-title">Vegi Gerichte</h3>
+        <div class="menu-grid">
+            <div class="mc"><div class="mc-left"><p class="mc-name">Vegi Döner</p><p class="mc-desc">mit Eisberg, Rotkohl, Zwiebeln, Tomate und Gurke</p></div><span class="mc-price">€ 5,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Vegi Dürüm</p><p class="mc-desc">mit Eisberg, Rotkohl, Zwiebeln, Tomate und Gurke</p></div><span class="mc-price">€ 6,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Falafel Im Brot</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 7,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Falafel In Dürüm</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 8,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Falafel Teller</p><p class="mc-desc">mit Salat, Pommes und Soße</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Falafel Halloumi Teller</p><p class="mc-desc">mit Salat, Pommes und Soße</p></div><span class="mc-price">€ 12,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Halloumi Im Brot</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 7,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Halloumi In Dürüm</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 8,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Halloumi Teller</p><p class="mc-desc">mit Salat, Pommes und Soße</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Pommes Frites</p><p class="mc-desc">Knusprig frittiert</p></div><span class="mc-price">€ 4,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Süsskartoffeln Pommes</p><p class="mc-desc">Hausgemacht</p></div><span class="mc-price">€ 6,00</span></div>
+          </div>
+      </div>
+
+      <!-- DÖNER -->
+      <div class="menu-panel" id="cat-doener">
+        <h3 class="cat-title">Döner Gerichte</h3>
+        <div class="menu-grid">
+            <div class="mc"><div class="mc-left"><p class="mc-name">Döner</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 7,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">BIG Döner</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 8,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Dürüm</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 8,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">BIG Dürüm</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 9,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Döner Teller</p><p class="mc-desc">mit Salat oder Pommes und Soße</p></div><span class="mc-price">€ 12,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Döner BOX Klein</p><p class="mc-desc">mit Salat oder Pommes und Soße</p></div><span class="mc-price">€ 7,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Döner BOX Groß</p><p class="mc-desc">mit Salat oder Pommes und Soße</p></div><span class="mc-price">€ 8,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Türkische Pizza</p><p class="mc-desc">mit Salat und Soße</p></div><span class="mc-price">€ 6,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Türkische Pizza mit Döner</p><p class="mc-desc">mit Dönerfleisch, Salat und Soße</p></div><span class="mc-price">€ 8,50</span></div>
+          </div>
+      </div>
+
+      <!-- SALATE -->
+      <div class="menu-panel" id="cat-salate">
+        <h3 class="cat-title">Salate</h3>
+        <div class="menu-grid">
+            <div class="mc"><div class="mc-left"><p class="mc-name">Salat Mista</p><p class="mc-desc">mit Eisberg, Rotkohl, Zwiebeln, Tomate und Gurke</p></div><span class="mc-price">€ 6,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Salat Dönerecci</p><p class="mc-desc">gem. Salat mit Dönerfleisch</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Salat Con Pecorino</p><p class="mc-desc">gem. Salat mit Fetakäse</p></div><span class="mc-price">€ 8,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Salat Tonno</p><p class="mc-desc">gem. Salat mit Thunfisch</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Salat Delux</p><p class="mc-desc">gem. Salat mit gebratenem Hähnchen, Champignons und Parmesan</p></div><span class="mc-price">€ 9,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Salat Con Scampi</p><p class="mc-desc">gem. Salat mit Rucola, Tomaten, Scampi und Parmesan</p></div><span class="mc-price">€ 11,50</span></div>
+          </div>
+      </div>
+
+      <!-- PIZZA -->
+      <div class="menu-panel" id="cat-pizza">
+        <h3 class="cat-title">Pizza</h3>
+        <div class="menu-grid">
+            <div class="mc"><div class="mc-left"><p class="mc-name">Margherita</p><p class="mc-desc">mit Mozzarella</p></div><span class="mc-price">€ 7,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Salami</p><p class="mc-desc">mit Salami</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Prosciutto</p><p class="mc-desc">mit Schinken</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Funghi</p><p class="mc-desc">mit Champignons</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Piano</p><p class="mc-desc">mit Schinken und Salami</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Hawaii</p><p class="mc-desc">mit Schinken und Ananas</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Tonno</p><p class="mc-desc">mit Thunfisch und Zwiebeln</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Mista</p><p class="mc-desc">mit Schinken, Salami, Champignons und Peperoni</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Sucuk</p><p class="mc-desc">mit Sucuk, Champignons und Oliven</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Dönerecci</p><p class="mc-desc">mit Dönerfleisch, Zwiebeln und Knoblauch</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Scampi</p><p class="mc-desc">mit Scampi, Brokkoli und Knoblauchöl</p></div><span class="mc-price">€ 12,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Emilio</p><p class="mc-desc">mit Schinken, Brokkoli, Rucola, Cherrytomaten und Parmesankäse</p></div><span class="mc-price">€ 11,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Polo Deluxe</p><p class="mc-desc">mit Hähnchen, Zwiebeln, Champignons und Peperoni</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">BBQ</p><p class="mc-desc">mit Hähnchen, Zwiebeln, Mais und Peperoni</p></div><span class="mc-price">€ 12,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Veggi</p><p class="mc-desc">mit Spinat, Brokkoli, Zwiebeln und Champignons</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Rucola</p><p class="mc-desc">mit Rucola, Cherrytomaten und Parmesan</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Spinaci Gorgonzola</p><p class="mc-desc">mit Spinat und Gorgonzola</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Caprese</p><p class="mc-desc">mit Mozzarella, Tomaten und Basilikum</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Quatro Formaggi</p><p class="mc-desc">mit 4 verschiedenen Käsesorten</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Pizza Robi</p><p class="mc-desc">mit Gorgonzola, Brokkoli, Tomaten und Rucola</p></div><span class="mc-price">€ 10,00</span></div>
+          </div>
+      </div>
+
+      <!-- PASTA -->
+      <div class="menu-panel" id="cat-pasta">
+        <h3 class="cat-title">Pasta</h3>
+        <div class="menu-grid">
+            <div class="mc"><div class="mc-left"><p class="mc-name">Spaghetti Pomodoro</p><p class="mc-desc">mit Tomatensoße und Basilikum</p></div><span class="mc-price">€ 7,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Spaghetti Aglio E Olio Picant</p><p class="mc-desc">mit Knoblauch, Chili, Petersilie, Olivenöl</p></div><span class="mc-price">€ 8,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Spaghetti Aglio E Olio Scampi</p><p class="mc-desc">mit Scampi, Knoblauch, Petersilie, Olivenöl</p></div><span class="mc-price">€ 12,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Spaghetti Scampi</p><p class="mc-desc">mit Tomatensoße, Scampi und Basilikum</p></div><span class="mc-price">€ 12,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Spaghetti Carbonara</p><p class="mc-desc">mit Schinken, Eigelb und Sahne</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Arabiata</p><p class="mc-desc">mit Knoblauch, Chili, Oliven, Basilikum und Tomatensoße</p></div><span class="mc-price">€ 8,50</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Gorgonzola</p><p class="mc-desc">mit Gorgonzola und Sahne</p></div><span class="mc-price">€ 8,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Spinaci Gorgonzola</p><p class="mc-desc">mit Gorgonzola, Spinat und Sahne</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Brokkoli</p><p class="mc-desc">mit Brokkoli und Sahne</p></div><span class="mc-price">€ 8,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Deluxe Pikant</p><p class="mc-desc">mit Hähnchenbrust, Brokkoli, Sahne, Knoblauch und Chili</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Hähnchen-Curry</p><p class="mc-desc">mit Hähnchenbrust, Spinat und Curry-Sahnesoße</p></div><span class="mc-price">€ 10,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Quatro Formaggi</p><p class="mc-desc">mit 4 Sorten Käse und Sahnesoße</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Veggi</p><p class="mc-desc">mit Brokkoli, Spinat, Champignons und Tomatensoße</p></div><span class="mc-price">€ 9,00</span></div>
+            <div class="mc"><div class="mc-left"><p class="mc-name">Penne Pollo Funghi</p><p class="mc-desc">mit Hähnchen, Champignons und Sahne</p></div><span class="mc-price">€ 10,00</span></div>
+          </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ REVIEWS ═══ -->
+  <section class="reviews-section" id="reviews">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Google Bewertungen</span>
+        <h2 class="section-title">Was unsere Kunden sagen</h2>
+        <p class="section-sub">Unser Durchschnitt auf Google Maps</p>
+      </div>
+
+      <!-- Rating Summary -->
+      <div class="rating-summary">
+        <div class="rating-big">
+          <span class="rating-number">4.8</span>
+          <div class="rating-stars-big">★★★★★</div>
+          <span class="rating-label">Google Bewertung</span>
+        </div>
+        <div class="rating-bars">
+          <div class="rbar"><span>5 ★</span><div class="rbar-track"><div class="rbar-fill" style="width:82%"></div></div><span class="rbar-n">82%</span></div>
+          <div class="rbar"><span>4 ★</span><div class="rbar-track"><div class="rbar-fill" style="width:13%"></div></div><span class="rbar-n">13%</span></div>
+          <div class="rbar"><span>3 ★</span><div class="rbar-track"><div class="rbar-fill rbar-fill--low" style="width:4%"></div></div><span class="rbar-n">4%</span></div>
+          <div class="rbar"><span>2 ★</span><div class="rbar-track"><div class="rbar-fill rbar-fill--low" style="width:1%"></div></div><span class="rbar-n">1%</span></div>
+          <div class="rbar"><span>1 ★</span><div class="rbar-track"><div class="rbar-fill rbar-fill--low" style="width:0%"></div></div><span class="rbar-n">0%</span></div>
+        </div>
+      </div>
+
+      <!-- Reviews Grid -->
+      <div class="reviews-grid">
+
+        <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar">M</div>
+              <div>
+                <strong>Maximilian S.</strong>
+                <span class="review-date">vor 2 Wochen</span>
+              </div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">„Absolut fantastisch! Der Döner ist der beste, den ich in Potsdam gegessen habe. Das Fleisch ist unglaublich zart und die Soße ist einfach perfekt. Werde definitiv wiederkommen!"</p>
+            <div class="review-source">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+              Google
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar rv-b">L</div>
+              <div>
+                <strong>Laura K.</strong>
+                <span class="review-date">vor 1 Monat</span>
+              </div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">„Die Pizza ist wirklich außergewöhnlich! Dünner Boden, frische Zutaten und ein toller Geschmack. Das Personal ist sehr freundlich und der Service war schnell. Mein neues Lieblingsrestaurant!"</p>
+            <div class="review-source">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+              Google
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar rv-g">T</div>
+              <div>
+                <strong>Thomas H.</strong>
+                <span class="review-date">vor 3 Wochen</span>
+              </div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">„Bestellung über Wolt war super einfach und das Essen kam heiß und pünktlich an. Der Deluxe Burger ist unbedingt empfehlenswert – riesige Portion und top Qualität. Klare 5 Sterne!"</p>
+            <div class="review-source">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+              Google
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="reviews-cta">
+        <p>Waren Sie zufrieden? Teilen Sie Ihre Erfahrung mit anderen!</p>
+        <a href="https://www.google.com/maps/place/Deluxe+Food/@52.4157142,13.022569,17z/data=!4m18!1m9!3m8!1s0x47a8f700184e2609:0x59cc8147ea0f6a48!2sDeluxe+Food!8m2!3d52.4158118!4d13.024923!9m1!1b1!16s%2Fg%2F11wj09p6yb!3m7!1s0x47a8f700184e2609:0x59cc8147ea0f6a48!8m2!3d52.4158118!4d13.024923!9m1!1b1!16s%2Fg%2F11wj09p6yb?entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-red" id="write-review-btn">
+          ⭐ Jetzt Bewertung schreiben
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Besuchen Sie uns</span>
+        <h2 class="section-title">So finden Sie uns</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-details">
+          <div class="contact-card">
+            <div class="cc-icon">📍</div>
+            <div>
+              <h4>Adresse</h4>
+              <p>Potsdamer Straße 18<br/>14469 Potsdam</p>
+              <a href="https://maps.app.goo.gl/7jbCqZDRSZWUz4cU7" target="_blank" class="cc-link" id="maps-link">Route planen →</a>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="cc-icon">📞</div>
+            <div>
+              <h4>Telefon</h4>
+              <p><a href="tel:033190067332" class="phone-link">0331 90067332</a></p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="cc-icon">🛵</div>
+            <div>
+              <h4>Online Bestellen</h4>
+              <div class="contact-order-btns">
+                <a href="https://wolt.com/de/deu/potsdam/restaurant/deluxe-food-potsdam?pid=google&c=DEU_Web_FTU_Search_DSA_DE" target="_blank" class="btn btn-red btn-sm">Wolt</a>
+                <a href="https://www.lieferando.de/speisekarte/deluxe-food-potsdamer-strasse" target="_blank" class="btn btn-outline btn-sm">Lieferando</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="map-box">
+          <iframe
+            src="https://maps.google.com/maps?q=Potsdamer+Straße+18,+14469+Potsdam&output=embed&z=16"
+            width="100%" height="420"
+            style="border:0; border-radius: 20px;"
+            allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Deluxe Food – Potsdamer Straße 18, 14469 Potsdam"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer" id="footer">
+    <div class="container footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="logo.png" alt="Deluxe Food" class="footer-logo" />
+          <div>
+            <strong>Deluxe Food</strong>
+            <span>Pizza · Pasta · Burger · Döner</span>
+          </div>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h5>Adresse</h5>
+            <p>Potsdamer Straße 18</p>
+            <p>14469 Potsdam</p>
+          </div>
+          <div class="footer-col">
+            <h5>Kontakt</h5>
+            <a href="tel:033190067332">0331 90067332</a>
+            <a href="https://maps.app.goo.gl/7jbCqZDRSZWUz4cU7" target="_blank">Google Maps</a>
+          </div>
+          <div class="footer-col">
+            <h5>Bestellen</h5>
+            <a href="https://wolt.com/de/deu/potsdam/restaurant/deluxe-food-potsdam?pid=google&c=DEU_Web_FTU_Search_DSA_DE" target="_blank">Wolt</a>
+            <a href="https://www.lieferando.de/speisekarte/deluxe-food-potsdamer-strasse" target="_blank">Lieferando</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 Deluxe Food Potsdam · Deluxe Gastro GmbH · Alle Rechte vorbehalten.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
