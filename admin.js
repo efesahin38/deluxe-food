@@ -128,17 +128,38 @@ async function loadOrders() {
 
     const paymentStatusText = order.payment_status === 'paid' ? 'Kreditkarte (Bezahlt)' : (order.payment_status === 'pending' ? 'Ausstehend' : 'Fehlgeschlagen');
 
+    const isDelivered = order.delivery_status === 'delivered';
+    const deliveryBtnHtml = isDelivered ? 
+      `<span class="badge" style="background:#D1FAE5; color:#065F46;">Zugestellt ✔️</span>` : 
+      `<button class="btn-small" onclick="markDelivered('${order.id}')" style="background:#10B981;">✔️ Zustellen</button>`;
+
     tr.innerHTML = `
       <td>${date}</td>
       <td>${order.customer_name}</td>
       <td>${order.customer_phone}<br>${order.customer_email}${addressHtml}</td>
       <td>${order.payment_method === 'cash' ? 'Bar (Lieferung)' : 'Kreditkarte (Stripe)'}</td>
-      <td><span class="badge ${order.payment_status}">${paymentStatusText}</span></td>
+      <td>
+        <div style="margin-bottom:6px;"><span class="badge ${order.payment_status}">${paymentStatusText}</span></div>
+        ${deliveryBtnHtml}
+      </td>
       <td>€${order.total_amount.toFixed(2)}</td>
       <td>${noteHtml} <ul>${itemsHtml}</ul></td>
     `;
     ordersTableBody.appendChild(tr);
   });
+}
+
+window.markDelivered = async function(id) {
+  const { error } = await supabase
+    .from('orders')
+    .update({ delivery_status: 'delivered' })
+    .eq('id', id);
+    
+  if (error) {
+    alert('Fehler beim Aktualisieren: ' + error.message);
+  } else {
+    loadOrders(); // refresh table
+  }
 }
 
 // Load Menu
