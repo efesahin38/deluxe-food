@@ -102,7 +102,7 @@ async function loadMenu() {
               <div class="mc-left">
                 <p class="mc-name">${item.name}</p>
                 <p class="mc-desc">${item.description || ''}</p>
-                <button class="add-to-cart-btn" onclick="addToCart('${item.id}', '${item.name.replace(/'/g, "\\'")}', ${item.price})">Sepete Ekle</button>
+                <button class="add-to-cart-btn" onclick="addToCart('${item.id}', '${item.name.replace(/'/g, "\\'")}', ${item.price})">In den Warenkorb</button>
               </div>
               <span class="mc-price">€ ${item.price.toFixed(2).replace('.', ',')}</span>
             </div>
@@ -136,7 +136,7 @@ async function loadMenu() {
 
   } catch (err) {
     console.error(err);
-    dynamicMenuContainer.innerHTML = '<p style="text-align:center; padding:40px;">Menü yüklenemedi.</p>';
+    dynamicMenuContainer.innerHTML = '<p style="text-align:center; padding:40px;">Menü konnte nicht geladen werden.</p>';
   }
 }
 
@@ -237,13 +237,16 @@ checkoutForm.addEventListener('submit', async (e) => {
     name: document.getElementById('custName').value,
     phone: document.getElementById('custPhone').value,
     email: document.getElementById('custEmail').value,
+    address: document.getElementById('custAddress').value,
+    zip: document.getElementById('custZip').value,
+    city: document.getElementById('custCity').value,
     note: document.getElementById('custNote').value
   };
   
   const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
   
   const submitBtn = document.getElementById('submitOrderBtn');
-  submitBtn.textContent = "İşleniyor...";
+  submitBtn.textContent = "Wird verarbeitet...";
   submitBtn.disabled = true;
 
   try {

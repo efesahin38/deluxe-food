@@ -375,38 +375,45 @@
   <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
   <div id="cartSidebar" class="cart-sidebar">
     <div class="cart-header">
-      <h2>Sepetim</h2>
+      <h2>Warenkorb</h2>
       <button class="cart-close-btn" onclick="toggleCart()">×</button>
     </div>
     
     <div id="cartItemsContainer" class="cart-items">
       <!-- Cart items injected here -->
-      <p class="empty-cart-msg">Sepetiniz boş.</p>
+      <p class="empty-cart-msg">Ihr Warenkorb ist leer.</p>
     </div>
     
     <div class="cart-footer">
       <div class="cart-total">
-        <span>Toplam:</span>
+        <span>Gesamt:</span>
         <strong id="cartTotal">€ 0.00</strong>
       </div>
       
       <!-- Checkout Form -->
       <form id="checkoutForm" class="checkout-form hidden">
-        <input type="text" id="custName" placeholder="Ad Soyad" required>
+        <input type="text" id="custName" placeholder="Vor- und Nachname" required>
         <input type="tel" id="custPhone" placeholder="Telefon (017...)" required>
         <input type="email" id="custEmail" placeholder="E-Mail" required>
-        <textarea id="custNote" placeholder="Sipariş Notu (İsteğe bağlı)"></textarea>
         
-        <p style="margin-bottom: 8px; font-weight:600; font-size:0.9rem;">Ödeme Yöntemi:</p>
-        <div style="display:flex; gap:10px; margin-bottom: 16px;">
-          <label><input type="radio" name="paymentMethod" value="cash" checked> Nakit (Kapıda)</label>
-          <label><input type="radio" name="paymentMethod" value="card"> Kredi Kartı</label>
+        <input type="text" id="custAddress" placeholder="Straße & Hausnummer" required>
+        <div style="display: flex; gap: 10px;">
+          <input type="text" id="custZip" placeholder="PLZ" required style="width: 35%;">
+          <input type="text" id="custCity" placeholder="Ort" required style="flex: 1;">
         </div>
         
-        <button type="submit" class="btn btn-red" id="submitOrderBtn" style="width:100%;">Siparişi Tamamla</button>
+        <textarea id="custNote" placeholder="Anmerkung (Optional)"></textarea>
+        
+        <p style="margin-bottom: 8px; font-weight:600; font-size:0.9rem;">Zahlungsmethode:</p>
+        <div style="display:flex; gap:10px; margin-bottom: 16px;">
+          <label><input type="radio" name="paymentMethod" value="cash" checked> Bar (Lieferung)</label>
+          <label><input type="radio" name="paymentMethod" value="card"> Kreditkarte</label>
+        </div>
+        
+        <button type="submit" class="btn btn-red" id="submitOrderBtn" style="width:100%;">Bestellung abschließen</button>
       </form>
       
-      <button class="btn btn-red" id="proceedCheckoutBtn" style="width:100%;" onclick="showCheckoutForm()">Ödeme Yap</button>
+      <button class="btn btn-red" id="proceedCheckoutBtn" style="width:100%;" onclick="showCheckoutForm()">Zur Kasse</button>
     </div>
   </div>
 

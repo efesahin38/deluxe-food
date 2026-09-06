@@ -48,7 +48,7 @@ function showLogin() {
 
 // Login
 loginBtn.addEventListener('click', async () => {
-  loginError.textContent = 'Giriş yapılıyor...';
+  loginError.textContent = 'Anmeldung läuft...';
   const email = emailInput.value;
   const password = passwordInput.value;
   
@@ -90,7 +90,7 @@ tabs.forEach(tab => {
 refreshOrdersBtn.addEventListener('click', loadOrders);
 
 async function loadOrders() {
-  ordersTableBody.innerHTML = '<tr><td colspan="7">Yükleniyor...</td></tr>';
+  ordersTableBody.innerHTML = '<tr><td colspan="7">Wird geladen...</td></tr>';
   
   // Fetch orders and their items using a join
   const { data: orders, error } = await supabase
@@ -102,13 +102,12 @@ async function loadOrders() {
     .order('created_at', { ascending: false });
 
   if (error) {
-    console.error("Hata:", error);
-    ordersTableBody.innerHTML = `<tr><td colspan="7">Hata: ${error.message}</td></tr>`;
+    ordersTableBody.innerHTML = `<tr><td colspan="7">Fehler: ${error.message}</td></tr>`;
     return;
   }
   
   if (!orders || orders.length === 0) {
-    ordersTableBody.innerHTML = '<tr><td colspan="7">Henüz sipariş yok.</td></tr>';
+    ordersTableBody.innerHTML = '<tr><td colspan="7">Noch keine Bestellungen.</td></tr>';
     return;
   }
 
@@ -124,15 +123,18 @@ async function loadOrders() {
       `<li>${item.quantity}x ${item.menu_item_name} (€${item.price_at_time})</li>`
     ).join('');
     
-    const noteHtml = order.note ? `<strong>Not:</strong> ${order.note}<br>` : '';
+    const noteHtml = order.note ? `<strong>Notiz:</strong> ${order.note}<br>` : '';
+    const addressHtml = order.customer_address ? `<br>${order.customer_address}, ${order.customer_zip} ${order.customer_city}` : '';
+
+    const paymentStatusText = order.payment_status === 'paid' ? 'Kreditkarte (Bezahlt)' : (order.payment_status === 'pending' ? 'Ausstehend' : 'Fehlgeschlagen');
 
     tr.innerHTML = `
       <td>${date}</td>
       <td>${order.customer_name}</td>
-      <td>${order.customer_phone}<br>${order.customer_email}</td>
-      <td>${order.payment_method === 'cash' ? 'Nakit (Kapıda)' : 'Kredi Kartı (Stripe)'}</td>
-      <td><span class="badge ${order.payment_status}">${order.payment_status === 'paid' ? 'Ödendi' : 'Bekliyor'}</span></td>
-      <td>€${order.total_amount}</td>
+      <td>${order.customer_phone}<br>${order.customer_email}${addressHtml}</td>
+      <td>${order.payment_method === 'cash' ? 'Bar (Lieferung)' : 'Kreditkarte (Stripe)'}</td>
+      <td><span class="badge ${order.payment_status}">${paymentStatusText}</span></td>
+      <td>€${order.total_amount.toFixed(2)}</td>
       <td>${noteHtml} <ul>${itemsHtml}</ul></td>
     `;
     ordersTableBody.appendChild(tr);
@@ -141,7 +143,7 @@ async function loadOrders() {
 
 // Load Menu
 async function loadMenu() {
-  menuTableBody.innerHTML = '<tr><td colspan="5">Yükleniyor...</td></tr>';
+  menuTableBody.innerHTML = '<tr><td colspan="5">Wird geladen...</td></tr>';
   
   const { data, error } = await supabase
     .from('menu_items')
@@ -150,7 +152,7 @@ async function loadMenu() {
     .order('name', { ascending: true });
 
   if (error) {
-    menuTableBody.innerHTML = `<tr><td colspan="5">Hata: ${error.message}</td></tr>`;
+    menuTableBody.innerHTML = `<tr><td colspan="5">Fehler: ${error.message}</td></tr>`;
     return;
   }
 
@@ -165,18 +167,71 @@ async function loadMenu() {
       <td>
         <input type="number" step="0.10" class="menu-edit-input" id="price-${item.id}" value="${item.price}">
       </td>
-      <td>${item.is_available ? 'Aktif' : 'Pasif'}</td>
-      <td>
-        <button class="btn-small" onclick="updatePrice('${item.id}')">Kaydet</button>
+      <td>${item.is_available ? 'Aktiv' : 'Versteckt'}</td>
+      <td style="display:flex; gap:6px;">
+        <button class="btn-small" onclick="updatePrice('${item.id}')">Speichern</button>
+        <button class="btn-hide" onclick="toggleVisibility('${item.id}', ${item.is_available})">
+          ${item.is_available ? 'Verbergen' : 'Anzeigen'}
+        </button>
       </td>
     `;
     menuTableBody.appendChild(tr);
   });
 }
 
+window.toggleVisibility = async function(id, currentStatus) {
+  const { error } = await supabase
+    .from('menu_items')
+    .update({ is_available: !currentStatus })
+    .eq('id', id);
+    
+  if (error) {
+    alert('Fehler beim Aktualisieren: ' + error.message);
+  } else {
+    loadMenu(); // refresh table
+  }
+}
+
+// Add New Product
+const saveNewProdBtn = document.getElementById('saveNewProdBtn');
+if (saveNewProdBtn) {
+  saveNewProdBtn.addEventListener('click', async () => {
+    const category = document.getElementById('newProdCat').value;
+    const name = document.getElementById('newProdName').value;
+    const desc = document.getElementById('newProdDesc').value;
+    const price = document.getElementById('newProdPrice').value;
+    
+    if (!name || !price) {
+      return alert("Bitte Produktname und Preis eingeben.");
+    }
+    
+    saveNewProdBtn.textContent = "Lädt...";
+    const { error } = await supabase
+      .from('menu_items')
+      .insert({
+        category,
+        name,
+        description: desc,
+        price: parseFloat(price),
+        is_available: true
+      });
+      
+    saveNewProdBtn.textContent = "Hinzufügen";
+    
+    if (error) {
+      alert("Fehler: " + error.message);
+    } else {
+      document.getElementById('newProdName').value = "";
+      document.getElementById('newProdDesc').value = "";
+      document.getElementById('newProdPrice').value = "";
+      loadMenu();
+    }
+  });
+}
+
 window.updatePrice = async function(id) {
   const newPrice = document.getElementById(`price-${id}`).value;
-  if (!newPrice) return alert('Lütfen geçerli bir fiyat girin.');
+  if (!newPrice) return alert('Bitte geben Sie einen gültigen Preis ein.');
   
   const { error } = await supabase
     .from('menu_items')
@@ -184,9 +239,9 @@ window.updatePrice = async function(id) {
     .eq('id', id);
     
   if (error) {
-    alert('Fiyat güncellenirken hata oluştu: ' + error.message);
+    alert('Fehler beim Aktualisieren des Preises: ' + error.message);
   } else {
-    alert('Fiyat başarıyla güncellendi!');
+    alert('Preis erfolgreich aktualisiert!');
   }
 }
 
