@@ -76,13 +76,15 @@ tabs.forEach(tab => {
     tabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     
-    if (tab.dataset.target === 'ordersView') {
-      ordersView.classList.remove('hidden');
-      menuView.classList.add('hidden');
-    } else {
-      ordersView.classList.add('hidden');
-      menuView.classList.remove('hidden');
-    }
+    const targetId = tab.dataset.target;
+    
+    // Hide all views
+    document.getElementById('ordersView').classList.add('hidden');
+    document.getElementById('menuView').classList.add('hidden');
+    document.getElementById('reportsView').classList.add('hidden');
+    
+    // Show target view
+    document.getElementById(targetId).classList.remove('hidden');
   });
 });
 
@@ -194,6 +196,7 @@ async function loadMenu() {
         <button class="btn-hide" onclick="toggleVisibility('${item.id}', ${item.is_available})">
           ${item.is_available ? 'Verbergen' : 'Anzeigen'}
         </button>
+        <button class="btn-hide" style="color:var(--red); border-color:var(--red);" onclick="deleteProduct('${item.id}')">Löschen</button>
       </td>
     `;
     menuTableBody.appendChild(tr);
@@ -210,6 +213,22 @@ window.toggleVisibility = async function(id, currentStatus) {
     alert('Fehler beim Aktualisieren: ' + error.message);
   } else {
     loadMenu(); // refresh table
+  }
+}
+
+window.deleteProduct = async function(id) {
+  if (!confirm("Möchten Sie dieses Produkt wirklich löschen?")) return;
+  
+  const { error } = await supabase
+    .from('menu_items')
+    .delete()
+    .eq('id', id);
+    
+  if (error) {
+    alert('Fehler beim Löschen: ' + error.message);
+  } else {
+    alert('Produkt gelöscht!');
+    loadMenu();
   }
 }
 
@@ -264,6 +283,145 @@ window.updatePrice = async function(id) {
   } else {
     alert('Preis erfolgreich aktualisiert!');
   }
+}
+
+// ----------------------------------------------------
+// REPORTS LOGIC
+// ----------------------------------------------------
+const reportFilterType = document.getElementById('reportFilterType');
+const reportDateInput = document.getElementById('reportDateInput');
+const reportMonthInput = document.getElementById('reportMonthInput');
+const generateReportBtn = document.getElementById('generateReportBtn');
+const reportTableBody = document.querySelector('#reportTable tbody');
+const totalRevenueDisplay = document.getElementById('totalRevenueDisplay');
+const exportPdfBtn = document.getElementById('exportPdfBtn');
+
+let currentReportData = [];
+let currentReportTotal = 0;
+let currentReportLabel = "";
+
+if (reportFilterType) {
+  // Set default to today
+  const today = new Date().toISOString().split('T')[0];
+  reportDateInput.value = today;
+  
+  const thisMonth = today.substring(0, 7);
+  reportMonthInput.value = thisMonth;
+
+  reportFilterType.addEventListener('change', (e) => {
+    if (e.target.value === 'day') {
+      reportDateInput.classList.remove('hidden');
+      reportMonthInput.classList.add('hidden');
+    } else {
+      reportDateInput.classList.add('hidden');
+      reportMonthInput.classList.remove('hidden');
+    }
+  });
+
+  generateReportBtn.addEventListener('click', async () => {
+    const isDay = reportFilterType.value === 'day';
+    let startDate, endDate, label;
+
+    if (isDay) {
+      if (!reportDateInput.value) return alert('Bitte wählen Sie ein Datum.');
+      label = 'Tagesbericht: ' + reportDateInput.value;
+      startDate = new Date(reportDateInput.value);
+      endDate = new Date(reportDateInput.value);
+      endDate.setDate(endDate.getDate() + 1);
+    } else {
+      if (!reportMonthInput.value) return alert('Bitte wählen Sie einen Monat.');
+      label = 'Monatsbericht: ' + reportMonthInput.value;
+      startDate = new Date(reportMonthInput.value + '-01');
+      endDate = new Date(startDate);
+      endDate.setMonth(endDate.getMonth() + 1);
+    }
+
+    reportTableBody.innerHTML = '<tr><td colspan="3">Bericht wird erstellt...</td></tr>';
+    
+    // Fetch orders within date range that are not failed
+    const { data: orders, error } = await supabase
+      .from('orders')
+      .select('*, order_items(*)')
+      .gte('created_at', startDate.toISOString())
+      .lt('created_at', endDate.toISOString())
+      .neq('payment_status', 'failed');
+
+    if (error) {
+      reportTableBody.innerHTML = `<tr><td colspan="3">Fehler: ${error.message}</td></tr>`;
+      return;
+    }
+
+    let totalRev = 0;
+    const itemsMap = {}; // name -> {qty, rev}
+
+    orders.forEach(o => {
+      totalRev += Number(o.total_amount);
+      if (o.order_items) {
+        o.order_items.forEach(item => {
+          if (!itemsMap[item.menu_item_name]) {
+            itemsMap[item.menu_item_name] = { qty: 0, rev: 0 };
+          }
+          itemsMap[item.menu_item_name].qty += item.quantity;
+          itemsMap[item.menu_item_name].rev += item.quantity * Number(item.price_at_time);
+        });
+      }
+    });
+
+    currentReportTotal = totalRev;
+    currentReportLabel = label;
+    totalRevenueDisplay.textContent = `€${totalRev.toFixed(2)}`;
+
+    // Convert map to array and sort by revenue descending
+    currentReportData = Object.keys(itemsMap).map(k => ({
+      name: k,
+      qty: itemsMap[k].qty,
+      rev: itemsMap[k].rev
+    })).sort((a, b) => b.rev - a.rev);
+
+    if (currentReportData.length === 0) {
+      reportTableBody.innerHTML = '<tr><td colspan="3">Keine Verkäufe im gewählten Zeitraum.</td></tr>';
+      return;
+    }
+
+    reportTableBody.innerHTML = currentReportData.map(item => `
+      <tr>
+        <td>${item.name}</td>
+        <td>${item.qty}x</td>
+        <td>€${item.rev.toFixed(2)}</td>
+      </tr>
+    `).join('');
+  });
+
+  exportPdfBtn.addEventListener('click', () => {
+    if (currentReportData.length === 0) {
+      return alert('Es gibt keine Daten zum Exportieren. Bitte erstellen Sie zuerst einen Bericht.');
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    doc.setFontSize(20);
+    doc.text('Deluxe Food - ' + currentReportLabel, 14, 22);
+    
+    doc.setFontSize(14);
+    doc.text(`Gesamtumsatz: EUR ${currentReportTotal.toFixed(2)}`, 14, 32);
+    
+    const tableData = currentReportData.map(item => [
+      item.name,
+      item.qty.toString(),
+      'EUR ' + item.rev.toFixed(2)
+    ]);
+    
+    doc.autoTable({
+      startY: 40,
+      head: [['Produktname', 'Menge', 'Umsatz']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: { fillColor: [232, 25, 44] } // Red color
+    });
+    
+    doc.save(`DeluxeFood_${currentReportLabel.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`);
+  });
 }
 
 // Init

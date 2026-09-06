@@ -5,6 +5,8 @@
   <title>Deluxe Food - Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
   <style>
     :root {
       --red: #E8192C; --ink: #111827; --ink2: #4B5563; 
@@ -103,6 +105,7 @@
       <div class="tabs">
         <div class="tab active" data-target="ordersView">Bestellungen</div>
         <div class="tab" data-target="menuView">Menüverwaltung</div>
+        <div class="tab" data-target="reportsView">Berichte (Dashboard)</div>
       </div>
 
       <!-- ORDERS VIEW -->
@@ -178,6 +181,50 @@
             </thead>
             <tbody>
               <!-- Menu items will be injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- REPORTS VIEW -->
+      <div id="reportsView" class="card hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap:10px;">
+          <h2>Tages- und Monatsberichte</h2>
+          <button class="btn" id="exportPdfBtn" style="background:#4F46E5;">Als PDF herunterladen</button>
+        </div>
+
+        <div style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; align-items: flex-end;">
+          <div class="form-group" style="margin-bottom:0; flex:1; min-width:200px;">
+            <label>Filtern nach (Tag oder Monat)</label>
+            <div style="display:flex; gap:10px;">
+              <select id="reportFilterType" style="width:120px;">
+                <option value="day">Tag</option>
+                <option value="month">Monat</option>
+              </select>
+              <input type="date" id="reportDateInput" style="flex:1;">
+              <input type="month" id="reportMonthInput" class="hidden" style="flex:1;">
+            </div>
+          </div>
+          <button class="btn" id="generateReportBtn" style="padding: 10px 24px;">Bericht erstellen</button>
+        </div>
+
+        <div style="background: #F3F4F6; padding: 20px; border-radius: 8px; margin-bottom: 24px; text-align: center; border: 1px solid var(--border);">
+          <h3 style="color: var(--ink2); font-size: 1rem; margin-bottom: 8px;">Gesamtumsatz</h3>
+          <p id="totalRevenueDisplay" style="font-size: 2.5rem; font-weight: 700; color: var(--red);">€0.00</p>
+        </div>
+
+        <h3>Verkaufte Produkte</h3>
+        <div class="table-container" style="margin-top:12px;">
+          <table id="reportTable">
+            <thead>
+              <tr>
+                <th>Produktname</th>
+                <th>Verkaufte Menge</th>
+                <th>Erzielter Umsatz (€)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="3">Bitte wählen Sie ein Datum und klicken Sie auf "Bericht erstellen".</td></tr>
             </tbody>
           </table>
         </div>
