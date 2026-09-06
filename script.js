@@ -126,6 +126,10 @@ async function loadMenu() {
       });
     });
 
+    if (window.observeDynamicItems) {
+      window.observeDynamicItems();
+    }
+
   } catch (err) {
     console.error(err);
     dynamicMenuContainer.innerHTML = '<p style="text-align:center; padding:40px;">Menü yüklenemedi.</p>';
@@ -268,3 +272,26 @@ checkoutForm.addEventListener('submit', async (e) => {
     submitBtn.disabled = false;
   }
 });
+
+/* ── Scroll reveal ───────────────────── */
+const revealItems = document.querySelectorAll(
+  '.order-card, .contact-card, .section-header, .review-card, .rating-summary, .mc'
+);
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 30);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+
+revealItems.forEach(el => { el.classList.add('reveal'); io.observe(el); });
+
+// Also observe dynamically added menu items
+window.observeDynamicItems = function() {
+  document.querySelectorAll('.mc:not(.reveal)').forEach(el => {
+    el.classList.add('reveal'); 
+    io.observe(el);
+  });
+};
