@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Deluxe Food - Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --red: #E8192C; --ink: #111827; --ink2: #4B5563; 
+      --bg: #F3F4F6; --white: #FFFFFF; --border: #E5E7EB;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background: var(--bg); color: var(--ink); padding: 20px; }
+    
+    .container { max-width: 1000px; margin: 0 auto; }
+    .card { background: var(--white); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 24px; }
+    
+    h1, h2 { margin-bottom: 16px; }
+    .hidden { display: none !important; }
+    
+    /* Login Form */
+    #authSection { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
+    .form-group { margin-bottom: 16px; width: 100%; max-width: 300px; }
+    .form-group input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; }
+    .btn { background: var(--red); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; max-width: 300px;}
+    .btn:hover { opacity: 0.9; }
+    
+    /* Dashboard */
+    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); }
+    th { background: #F9FAFB; font-weight: 600; color: var(--ink2); }
+    
+    .badge { padding: 4px 8px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; }
+    .badge.paid { background: #D1FAE5; color: #065F46; }
+    .badge.pending { background: #FEF3C7; color: #92400E; }
+    
+    .tabs { display: flex; gap: 12px; margin-bottom: 24px; }
+    .tab { padding: 8px 16px; cursor: pointer; border-radius: 6px; background: #E5E7EB; }
+    .tab.active { background: var(--red); color: white; }
+    
+    .menu-edit-input { width: 80px; padding: 4px; border: 1px solid var(--border); border-radius: 4px; }
+    .btn-small { background: var(--ink); color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+    
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .card { padding: 16px; }
+      th, td { padding: 8px; font-size: 0.9rem; }
+      h1 { font-size: 1.5rem; }
+      .tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <!-- LOGIN SECTION -->
+    <div id="authSection" class="card">
+      <h2>Admin Login</h2>
+      <div class="form-group">
+        <input type="email" id="email" placeholder="Admin E-Mail" required>
+      </div>
+      <div class="form-group">
+        <input type="password" id="password" placeholder="Şifre" required>
+      </div>
+      <button class="btn" id="loginBtn">Giriş Yap</button>
+      <p id="loginError" style="color: red; margin-top: 10px; font-size: 0.9rem;"></p>
+    </div>
+
+    <!-- DASHBOARD SECTION -->
+    <div id="dashboardSection" class="hidden">
+      <div class="dashboard-header">
+        <h1>Deluxe Food Admin</h1>
+        <button class="btn-small" id="logoutBtn">Çıkış Yap</button>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" data-target="ordersView">Siparişler</div>
+        <div class="tab" data-target="menuView">Menü Yönetimi</div>
+      </div>
+
+      <!-- ORDERS VIEW -->
+      <div id="ordersView" class="card">
+        <h2>Gelen Siparişler</h2>
+        <button class="btn-small" id="refreshOrdersBtn" style="margin-bottom: 12px;">Yenile</button>
+        <div style="overflow-x: auto;">
+          <table id="ordersTable">
+            <thead>
+              <tr>
+                <th>Tarih</th>
+                <th>Müşteri</th>
+                <th>İletişim</th>
+                <th>Ödeme Tipi</th>
+                <th>Durum</th>
+                <th>Tutar</th>
+                <th>Detay (Not & Ürünler)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Orders will be injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MENU VIEW -->
+      <div id="menuView" class="card hidden">
+        <h2>Menü Fiyatlarını Güncelle</h2>
+        <div style="overflow-x: auto;">
+          <table id="menuTable">
+            <thead>
+              <tr>
+                <th>Kategori</th>
+                <th>Ürün Adı</th>
+                <th>Fiyat (€)</th>
+                <th>Durum</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Menu items will be injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
