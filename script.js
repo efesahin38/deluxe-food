@@ -50,8 +50,6 @@ if (tabsWrap) {
 const SUPABASE_URL = 'https://avsnsfvkhkqscmnnkgjv.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2c25zZnZraGtxc2Ntbm5rZ2p2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3MDA3MTMsImV4cCI6MjEwNDI3NjcxM30.8RCgiobVp9kGy2w58z4FDRdZF2BuV0LkgZQbKguO1aM';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 /* ── Menu & Cart Logic ───────────────── */
 let cart = [];
 const dynamicMenuContainer = document.getElementById('dynamicMenuContainer');
@@ -59,14 +57,20 @@ const dynamicMenuContainer = document.getElementById('dynamicMenuContainer');
 async function loadMenu() {
   if (!dynamicMenuContainer) return;
   try {
-    const { data: items, error } = await supabase
-      .from('menu_items')
-      .select('*')
-      .eq('is_available', true)
-      .order('category', { ascending: true })
-      .order('name', { ascending: true });
-
-    if (error) throw error;
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/menu_items?is_available=eq.true&select=*`, {
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      }
+    });
+    if (!res.ok) throw new Error("Failed to fetch menu");
+    const items = await res.json();
+    
+    // Sort items
+    items.sort((a, b) => {
+      if (a.category !== b.category) return a.category.localeCompare(b.category);
+      return a.name.localeCompare(b.name);
+    });
     
     // Group by category
     const categories = {
@@ -243,16 +247,22 @@ checkoutForm.addEventListener('submit', async (e) => {
   submitBtn.disabled = true;
 
   try {
-    const { data, error } = await supabase.functions.invoke('checkout', {
-      body: { 
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/checkout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+      },
+      body: JSON.stringify({ 
         customer, 
         cart, 
         paymentMethod,
         frontendUrl: window.location.origin
-      }
+      })
     });
     
-    if (error) throw error;
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Checkout request failed");
     if (data.error) throw new Error(data.error);
     
     if (paymentMethod === 'cash') {
